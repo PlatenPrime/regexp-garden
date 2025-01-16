@@ -6,7 +6,11 @@ import TBankButton from "@/components/TBank.tsx";
 
 export const Header = () => {
   const socials = [
-    { icon: github, href: "https://github.com/avfirsov", hint: "github logo" },
+    {
+      icon: github,
+      href: "https://github.com/avfirsov/regexp-garden",
+      hint: "github logo",
+    },
     { icon: tg, href: "https://t.me/curious_andrew", hint: "telegram logo" },
   ];
 
