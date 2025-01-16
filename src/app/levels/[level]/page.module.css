@@ -1,0 +1,16 @@
+@keyframes slideDown {
+  0% {
+    background-position: 50% 48%; /* Начальная позиция - верх экрана */
+  }
+  100% {
+    background-position: 50% 50%; /* Конечная позиция */
+  }
+}
+
+.overlay {
+  background-image: url("/assets/icons/level-is-locked.svg");
+  background-size: 15% auto; /* или другой размер в зависимости от задачи */
+  background-repeat: no-repeat;
+  background-position: 50% 50%; /* Сдвиг фона относительно левого верхнего угла */
+  animation: slideDown 0.6s ease-in-out forwards; /* Анимация длится 2 секунды */
+}

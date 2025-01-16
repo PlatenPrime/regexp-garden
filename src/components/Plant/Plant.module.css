@@ -1,0 +1,50 @@
+.pot {
+  width: auto;
+  transition:
+    top 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  position: relative;
+  transform: translateY(83%);
+}
+
+.plantWrap {
+  width: auto;
+  position: absolute;
+  left: 0;
+  transition:
+    bottom 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+}
+
+.plant {
+}
+
+.plantWrap_active img.plant {
+  position: relative;
+  transform-origin: bottom;
+  transform: scale(105%);
+  transition: transform 0.1s ease-in-out;
+  z-index: 20;
+}
+
+.plantWrap_active::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px; /* Выпирает за левую границу */
+  right: -10px; /* Выпирает за правую границу */
+  bottom: -10px; /* Выпирает за нижнюю границу */
+  border-radius: 20px;
+  background: linear-gradient(to bottom, white 10%, rgba(255, 255, 255, 0) 70%)
+    no-repeat;
+  z-index: 1; /* Градиент ниже изображения */
+  pointer-events: none; /* Чтобы градиент не блокировал взаимодействие */
+}
+
+.plantInPot {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  /*//TODO: сделать зависимость от breakpoint*/
+  max-width: calc(var(--max-plant-width) * 1px);
+}

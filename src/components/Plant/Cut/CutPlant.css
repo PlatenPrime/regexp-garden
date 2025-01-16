@@ -1,0 +1,47 @@
+:root {
+  --plant-cut-offset-bottom: calc(20 / 60 * var(--max-plant-width) * 1px);
+}
+
+.cut-plant-bottom__wrap {
+  overflow: hidden;
+  width: calc(var(--max-plant-width) * 1px);
+  max-width: calc(var(--max-plant-width) * 1px);
+  height: var(--plant-cut-offset-bottom);
+  z-index: 20;
+}
+
+.cut-plant-bottom__plant {
+  position: relative;
+  width: 100%;
+  height: auto;
+  transform: translateY(calc(var(--plant-cut-offset-bottom) - 100%));
+  z-index: 20;
+}
+
+@keyframes topPieceExit {
+  to {
+    transform: translateY(-500px);
+  }
+}
+
+.cut-plant-top__wrap {
+  overflow: hidden;
+  width: calc(var(--max-plant-width) * 1px);
+  max-width: calc(var(--max-plant-width) * 1px);
+  height: fit-content;
+  z-index: 20;
+}
+
+.cut-plant-top__plant {
+  z-index: 20;
+  position: relative;
+  width: 100%;
+  height: auto;
+  transform: translateY(calc(var(--plant-cut-offset-bottom)));
+  animation: topPieceExit 300ms cubic-bezier(1, 0.03, 1, 0.95) forwards
+    calc(
+      (var(--scissors-swing-duration) + 200ms) * 2 +
+        (var(--scissors-entrance-duration) + 200ms) * 2 +
+        var(--scissors-cut-duration) + 200ms
+    );
+}

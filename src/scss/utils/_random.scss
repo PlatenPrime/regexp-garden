@@ -1,0 +1,41 @@
+/**
+Рандомные числа, 1000 чисел от 0 до 1000 с индексами от 1 до 1000,
+ */
+$random-values: ();
+
+// Наполняем мапу случайными значениями в цикле
+@for $i from 1 through 1000 {
+  // Добавляем значения в мапу, используя динамический ключ
+  $random-values: map-merge(
+    $random-values,
+    (
+      $i: random(1000),
+    )
+  );
+}
+
+/**
+ * Функция randomBetween(from, to, seed)
+ * - from: нижняя граница диапазона
+ * - to: верхняя граница диапазона
+ * - seed: индекс числа в $random-values
+ */
+@function randomBetween($from, $to) {
+  $seed: random(1000);
+  // Получаем случайное значение из мапы
+  $random-value: map-get($random-values, $seed);
+
+  // Проверяем, что значение существует
+  @if $random-value == null {
+    @error "Seed #{$seed} не найден в мапе $random-values.";
+  }
+
+  // Масштабируем значение в диапазон от $from до $to
+  $scaled-value: $from + ($random-value / 1000 * ($to - $from));
+
+  @return $scaled-value;
+}
+
+@function randomBetweenZeroAnd($to) {
+  @return randomBetween(0, $to);
+}

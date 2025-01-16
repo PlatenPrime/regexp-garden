@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "regexp-garden",
+  "short_name": "RegexpGarden",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "An interactive regexp tutorial - learn regexp growing your own garden"
+}

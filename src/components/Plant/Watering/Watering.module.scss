@@ -1,0 +1,114 @@
+@use "../../../scss/utils/proportional-to-plant-width" as *; // Импортируем файл с мапой
+
+@keyframes floweringCanEnter {
+  0% {
+    bottom: 500px;
+  }
+
+  100% {
+    bottom: 100%;
+  }
+}
+
+@keyframes floweringCanTilt {
+  0% {
+    transform: scale(var(--scale)) rotate(0);
+  }
+
+  10% {
+    transform: scale(var(--scale)) rotate(-30deg);
+  }
+
+  30% {
+    transform: scale(var(--scale)) rotate(-35deg);
+  }
+
+  50% {
+    transform: scale(var(--scale)) rotate(-25deg);
+  }
+
+  70% {
+    transform: scale(var(--scale)) rotate(-35deg);
+  }
+
+  100% {
+    transform: scale(var(--scale)) rotate(0deg);
+  }
+}
+
+.floweringCan {
+  --scale: 1.5;
+  transform: scale(var(--scale));
+  position: absolute;
+  left: proportionalToPlantWidth(50);
+  will-change: transform;
+  animation:
+    floweringCanEnter 1000ms forwards ease-in-out,
+    floweringCanTilt 3000ms 1200ms forwards,
+    floweringCanEnter 1000ms 4400ms reverse forwards ease-in-out;
+}
+
+@keyframes waterDrop {
+  0% {
+    height: 0;
+    bottom: var(--bottomStart);
+  }
+  20% {
+    height: var(--maxHeight);
+  }
+  80% {
+    height: var(--maxHeight);
+  }
+  100% {
+    height: var(--maxHeight);
+    bottom: var(--bottomEnd);
+  }
+}
+
+@keyframes waterDropAppearence {
+  0% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.waterStream {
+  --maxHeight: 10px;
+  --bottomStart: calc(var(--max-plant-width) * 1px);
+  --bottomEnd: proportionalToPlantWidth(20);
+  position: absolute;
+  bottom: var(--bottomStart);
+  left: proportionalToPlantWidth(35);
+  width: 2px;
+  background-color: aqua;
+  border-radius: 30%;
+  animation:
+    waterDropAppearence 1600ms both,
+    waterDrop 500ms ease-in-out 7;
+}
+
+//почему-то для первого элемента нужно указать .waterStream:nth-of-type(2)
+.waterStream:nth-of-type(2) {
+  transform: translateX(-4px);
+  animation-delay: 100ms;
+}
+
+.waterStream:nth-of-type(3) {
+  transform: translateX(-8px);
+  animation-delay: -20ms;
+}
+
+.waterStream:nth-of-type(4) {
+}
+
+.waterStream:nth-of-type(5) {
+  transform: translateX(4px);
+  animation-delay: -100ms;
+}

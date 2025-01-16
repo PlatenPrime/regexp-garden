@@ -1,0 +1,41 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy code via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            # Создаем директорию, если она отсутствует
+            if [ ! -d "/var/www/regexp-garden" ]; then
+              mkdir -p /var/www/regexp-garden
+              git clone git@github.com:avfirsov/regexp-garden.git /var/www/regexp-garden
+            fi
+
+            cd /var/www/regexp-garden
+            git pull origin main
+            npm install
+            npm run build
+
+            # Убедимся, что pm2 настроен
+            if ! pm2 describe regexp-garden > /dev/null; then
+              pm2 start npm --name "regexp-garden" -- start -- -p 4000
+            else
+              pm2 restart regexp-garden
+            fi
+          EOF

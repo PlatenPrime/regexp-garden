@@ -1,0 +1,104 @@
+@use "../../../scss/utils/proportional-to-plant-width" as *;
+
+:root {
+  --scissors-swing-duration: 400ms;
+  --scissors-cut-duration: 2200ms;
+  --scissors-entrance-duration: 1000ms;
+}
+
+@keyframes entrance {
+  0% {
+    top: -500px;
+  }
+
+  100% {
+    top: proportionalToPlantWidth(20);
+  }
+}
+
+@keyframes swingToLeft {
+  0% {
+    offset-distance: 0;
+  }
+
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.scissors {
+  position: absolute;
+  left: proportionalToPlantWidth(200);
+  transform: rotateX(35deg) scale(1.5);
+  offset-rotate: 0deg;
+  z-index: 100;
+}
+
+.scissors-no-animation {
+  animation:
+    entrance var(--scissors-entrance-duration) ease-in-out forwards,
+    swingToLeft var(--scissors-swing-duration) ease-in-out forwards
+      calc(var(--scissors-entrance-duration) + 200ms),
+    hide 0ms forwards
+      calc(
+        var(--scissors-entrance-duration) + 200ms +
+          var(--scissors-swing-duration) + 200ms
+      ),
+    hide 0ms forwards reverse
+      calc(
+        var(--scissors-entrance-duration) + 200ms +
+          var(--scissors-swing-duration) + 200ms + var(--scissors-cut-duration)
+      ),
+    swingToLeft var(--scissors-swing-duration) ease-in-out forwards reverse
+      calc(
+        var(--scissors-entrance-duration) + 200ms +
+          var(--scissors-swing-duration) + 200ms + var(--scissors-cut-duration) +
+          200ms
+      ),
+    entrance var(--scissors-entrance-duration) ease-in-out forwards reverse
+      calc(
+        var(--scissors-entrance-duration) + 200ms +
+          var(--scissors-swing-duration) + 200ms + var(--scissors-cut-duration) +
+          200ms + var(--scissors-swing-duration) + 200ms
+      );
+}
+
+.scissors-animated {
+  opacity: 0;
+  animation:
+    entrance var(--scissors-entrance-duration) ease-in-out forwards,
+    swingToLeft var(--scissors-swing-duration) ease-in-out forwards
+      calc(var(--scissors-entrance-duration) + 200ms),
+    hide 0ms forwards reverse
+      calc(
+        var(--scissors-entrance-duration) + 200ms +
+          var(--scissors-swing-duration) + 200ms
+      ),
+    hide 0ms forwards
+      calc(
+        var(--scissors-entrance-duration) + 200ms +
+          var(--scissors-swing-duration) + 200ms + var(--scissors-cut-duration)
+      ),
+    swingToLeft var(--scissors-swing-duration) ease-in-out forwards reverse
+      calc(
+        var(--scissors-entrance-duration) + 200ms +
+          var(--scissors-swing-duration) + 200ms + var(--scissors-cut-duration) +
+          200ms
+      ),
+    entrance var(--scissors-entrance-duration) ease-in-out forwards reverse
+      calc(
+        var(--scissors-entrance-duration) + 200ms +
+          var(--scissors-swing-duration) + 200ms + var(--scissors-cut-duration) +
+          200ms + var(--scissors-swing-duration) + 200ms
+      );
+}

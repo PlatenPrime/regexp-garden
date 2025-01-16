@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /*styles for description block*/
+  .description {
+    & h1 {
+      @apply font-bold text-blue-100;
+    }
+  }
+
+  .tab-list {
+    @apply flex items-end;
+  }
+
+  .tab {
+    @apply w-max text-sm py-2 px-3 bg-ds-inactiveTabFill text-white cursor-pointer;
+  }
+
+  .tab.single-tab {
+    @apply rounded-t-xl bg-ds-activeTabFill cursor-default;
+  }
+
+  .tab.react-tabs__tab--selected:not(.single-tab) {
+    @apply py-3 bg-ds-activeTabFill;
+  }
+
+  .tab:first-child {
+    @apply rounded-tl-xl;
+  }
+
+  .tab:last-child {
+    @apply rounded-tr-xl;
+  }
+
+  .tabPanel {
+    @apply rounded-b-xl rounded-tr-xl border border-ds-inactiveTabFill overflow-hidden;
+  }
+
+  .button {
+    @apply bg-ds-buttonBlueFill text-white rounded-full px-2;
+    box-shadow: 0 5px #0338c2;
+    transition:
+      transform 0.1s ease-in-out,
+      background-color 0.1s ease-in-out,
+      box-shadow 0.1s ease-in-out;
+  }
+
+  .button:active,
+  .button.active {
+    background-color: #0338c2;
+    transform: translateY(5px);
+    box-shadow: none;
+  }
+
+  .nav-btn {
+    @apply bg-ds-buttonGrayFill flex h-8 min-h-8 w-8 min-w-8 cursor-pointer items-center justify-center rounded-lg;
+  }
+
+  .nav-btn_disabled {
+    @apply opacity-50 pointer-events-none;
+  }
+
+  .progress-pointer {
+    @apply h-[4px] w-[4px] rounded-full bg-ds-headingRed relative top-[-3.5px];
+    box-shadow: 0 0 4px #e85c4f;
+  }
+
+  em {
+    @apply text-ds-codeRed bg-ds-codeRed bg-opacity-20;
+  }
+
+  .keyword {
+    color: #c792ea;
+  }
+
+  .literal {
+    color: #ecc48d;
+  }
+
+  .identifier {
+    color: #d6deeb;
+  }
+
+  .casual-token {
+    color: #d6deeb;
+  }
+
+  .prop {
+    color: #dcdcaa;
+  }
+
+  .method {
+    color: #dcdcaa;
+  }
+
+  .regexp {
+    color: #7fdbca;
+  }
+
+  .tabulation-literal {
+    color: #2e68ff;
+  }
+
+  .comment {
+    color: #8c97b0;
+  }
+}
+
+:root {
+  --max-plant-width: 20; /* значение по умолчанию */
+}
+
+/* Для экранов шириной от 768px и выше */
+@media (min-width: 768px) {
+  :root {
+    --max-plant-width: 40;
+  }
+}
+
+/* Для экранов шириной от 1024px и выше */
+@media (min-width: 1024px) {
+  :root {
+    --max-plant-width: 60;
+  }
+}
+
+/* Для экранов шириной от 1440px и выше */
+@media (min-width: 1440px) {
+  :root {
+    --max-plant-width: 80;
+  }
+}
+
+body {
+  font-feature-settings: "tnum";
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #24272e;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #717888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8c97b0;
+}
+
+@keyframes fail-animation {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-failure {
+  animation: fail-animation 300ms forwards;
+}

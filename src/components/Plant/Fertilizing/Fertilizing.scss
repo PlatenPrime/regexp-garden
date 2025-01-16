@@ -1,0 +1,310 @@
+@use "../../../scss/utils/random" as *;
+@use "../../../scss/utils/proportional-to-plant-width" as *; // Импортируем файл с мапой
+
+:root {
+  --fertilizer-particle-count: 100;
+}
+$fertilizer-particle-count: 100; // Количество мелких частиц, должно совпадать в обоих переменных
+
+:root {
+  --dust-clouds-count: 5;
+}
+$dust-clouds-count: 100; // Количество крупных частиц. Вторая переменная - сколько стилей генерируем, первая - сколько облаков
+//для истинной рандомизации поведения частиц мы создаем много классов с рандомным поведением, а потом раздаем их немногим сгенерированным частицам
+
+$fertilizerBagEntranceDuration: 1000ms;
+$fertilizerBagRotationDuration: 300ms;
+$fertilizerBagShakingDuration: 2000ms;
+$dust-cloud-color: rgba(78, 52, 46, 0.2); // Полупрозрачный коричневый цвет
+
+// Градиенты для частиц
+$gradients: (
+  radial-gradient(circle at 50% 50%, #d07324, #b65e1d),
+  radial-gradient(circle at 30% 30%, #ce6e20, #a8541a),
+  radial-gradient(circle at 70% 70%, #b3542e, #8a3b19),
+  radial-gradient(circle at 50% 50%, #8a3b19, #703017)
+);
+
+@keyframes particleEntrance {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes move {
+  0% {
+    offset-distance: 0;
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: absolute;
+  opacity: 0;
+  content: "";
+  border-radius: 50%; // Округлая форма
+  z-index: 100;
+
+  // Разная форма частиц: случайные размеры и градиенты
+  @for $i from 1 through $fertilizer-particle-count {
+    // Генерация случайных значений для clip-path
+    $x1: randomBetweenZeroAnd(100) * 1%;
+    $y1: randomBetweenZeroAnd(100) * 1%;
+    $x2: randomBetweenZeroAnd(100) * 1%;
+    $y2: randomBetweenZeroAnd(100) * 1%;
+    $x3: randomBetweenZeroAnd(100) * 1%;
+    $y3: randomBetweenZeroAnd(100) * 1%;
+    $x4: randomBetweenZeroAnd(100) * 1%;
+    $y4: randomBetweenZeroAnd(100) * 1%;
+
+    $animation-duration: calc(#{random(800)}ms + 400ms);
+    $animation-delay: calc(#{random(400)}ms);
+    $particles-common-delay: calc($fertilizerBagEntranceDuration + 200ms);
+
+    &-#{$i} {
+      // Применение параболической траектории с двумя анимациями
+      animation:
+        particleEntrance 200ms ease-in-out $particles-common-delay forwards,
+        move
+          $animation-duration
+          cubic-bezier(1, 0.03, 1, 0.95)
+          30
+          calc($particles-common-delay + $animation-delay)
+          forwards,
+        particleEntrance
+          200ms
+          ease-in-out
+          calc(
+            $particles-common-delay +
+              $animation-delay +
+              $animation-duration +
+              200ms +
+              500ms
+          )
+          reverse
+          forwards;
+      width: proportionalToPlantWidth(randomBetweenZeroAnd(3) + 2.5);
+      height: proportionalToPlantWidth(randomBetweenZeroAnd(3) + 2.5);
+      background: nth($gradients, random(length($gradients)));
+    }
+
+    //придаем частицам пыли неправильный, угловатый вид
+    &-#{$i}__polygon {
+      opacity: 0;
+      width: proportionalToPlantWidth(randomBetweenZeroAnd(5) + 2.5);
+      height: proportionalToPlantWidth(randomBetweenZeroAnd(5) + 2.5);
+      transform: translate(-50%, -50%); // Центрируем по элементу
+      background: nth(
+        $gradients,
+        random(length($gradients))
+      ); // Случайный градиент из списка
+
+      // Используем переменные в clip-path
+      clip-path: polygon($x1 $y1, $x2 $y2, $x3 $y3, $x4 $y4);
+      // Анимация по оси X для обертки
+      animation:
+        particleEntrance 200ms ease-in-out $particles-common-delay forwards,
+        move
+          $animation-duration
+          cubic-bezier(1, 0.03, 1, 0.95)
+          30
+          calc($particles-common-delay + $animation-delay)
+          forwards;
+    }
+  }
+}
+
+@for $i from 1 through $dust-clouds-count {
+  // Анимация для броуновского движения
+  @keyframes brownian-move-#{$i} {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.15;
+    }
+    25% {
+      transform: translate(
+          proportionalToPlantWidth(randomBetweenZeroAnd(30) - 15),
+          proportionalToPlantWidth(randomBetweenZeroAnd(30) - 15)
+        )
+        scale(1.05);
+      opacity: 0.2;
+    }
+    50% {
+      transform: translate(
+          proportionalToPlantWidth(randomBetweenZeroAnd(60) - 30),
+          proportionalToPlantWidth(randomBetweenZeroAnd(60) - 30)
+        )
+        scale(1.1);
+      opacity: 0.1;
+    }
+    75% {
+      transform: translate(
+          proportionalToPlantWidth(randomBetweenZeroAnd(30) - 15),
+          proportionalToPlantWidth(randomBetweenZeroAnd(30) - 15)
+        )
+        scale(1.05);
+      opacity: 0.2;
+    }
+    100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.15;
+    }
+  }
+}
+
+@keyframes dusst-cloud-entrance {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+$dust-cloud-entrance-duration: 800ms;
+
+//анимируем отдельно проявление облаков пыли и их движение
+.dust-cloud__opacity-wrap {
+  opacity: 0;
+  animation:
+    dusst-cloud-entrance $dust-cloud-entrance-duration ease-in-out forwards
+      calc(
+        $fertilizerBagEntranceDuration + 200ms + $fertilizerBagRotationDuration
+      ),
+    dusst-cloud-entrance $dust-cloud-entrance-duration ease-in-out reverse
+      forwards
+      calc(
+        $fertilizerBagEntranceDuration + 200ms + $fertilizerBagRotationDuration +
+          $fertilizerBagShakingDuration
+      );
+}
+
+.dust-cloud {
+  position: absolute;
+  background-color: $dust-cloud-color;
+  border-radius: 50%;
+  z-index: 10; // На заднем плане для эффекта фона
+
+  @for $i from 1 through $dust-clouds-count {
+    &-#{$i} {
+      width: proportionalToPlantWidth(
+        randomBetweenZeroAnd(50) + 50
+      ); // Случайный размер от 300 до 500px
+      height: proportionalToPlantWidth(randomBetweenZeroAnd(50) + 50);
+      left: #{- randomBetweenZeroAnd(50)}px; // Случайное начальное положение
+      top: #{randomBetweenZeroAnd(50)}px; // Устанавливаем в центре
+
+      // Применение анимации для броуновского движения
+      animation: brownian-move-#{$i} #{random(10) + 10}s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes fertilizerBagEntrance {
+  0% {
+    top: -500px;
+  }
+
+  100% {
+    top: proportionalToPlantWidth(randomBetweenZeroAnd(10) - 63);
+  }
+}
+
+@keyframes fertilizerBagRotation {
+  from {
+    transform: rotate(14deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes shake-bag {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  10% {
+    transform: translate(-3px, 2px) rotate(-2deg);
+  }
+  20% {
+    transform: translate(3px, -2px) rotate(2deg);
+  }
+  30% {
+    transform: translate(-2px, 3px) rotate(-1deg);
+  }
+  40% {
+    transform: translate(2px, -3px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-3px, 2px) rotate(-2deg);
+  }
+  60% {
+    transform: translate(3px, -2px) rotate(2deg);
+  }
+  70% {
+    transform: translate(-2px, 3px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(2px, -3px) rotate(1deg);
+  }
+  90% {
+    transform: translate(-3px, 2px) rotate(-2deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+/**
+  entrance
+  200ms
+  rotation
+  shaking
+  rotation
+  200ms
+  entrance
+ */
+
+.fertilizer-bag {
+  width: proportionalToPlantWidth(80);
+  position: absolute;
+  top: proportionalToPlantWidth(randomBetweenZeroAnd(10) - 63);
+  left: proportionalToPlantWidth(randomBetweenZeroAnd(10) + 49);
+  z-index: 10;
+  transform: rotate(14deg);
+  animation:
+    fertilizerBagEntrance $fertilizerBagEntranceDuration ease-in-out forwards,
+    fertilizerBagRotation $fertilizerBagRotationDuration ease-in-out forwards
+      calc($fertilizerBagEntranceDuration + 200ms),
+    shake-bag $fertilizerBagShakingDuration linear infinite
+      calc(
+        $fertilizerBagEntranceDuration + 200ms + $fertilizerBagRotationDuration
+      ),
+    fertilizerBagRotation $fertilizerBagRotationDuration ease-in-out forwards
+      reverse
+      calc(
+        $fertilizerBagEntranceDuration + 200ms + $fertilizerBagRotationDuration +
+          $fertilizerBagShakingDuration
+      ),
+    fertilizerBagEntrance $fertilizerBagEntranceDuration ease-in-out reverse
+      forwards
+      calc(
+        $fertilizerBagEntranceDuration + 200ms + $fertilizerBagRotationDuration +
+          $fertilizerBagShakingDuration + 200ms + $fertilizerBagRotationDuration +
+          200ms
+      );
+}

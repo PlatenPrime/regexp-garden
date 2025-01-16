@@ -1,0 +1,29 @@
+:root {
+  --replace-plant-duration: 1000ms;
+}
+
+@keyframes exit {
+  from {
+    bottom: 100%;
+  }
+  to {
+    bottom: 500px;
+  }
+}
+
+.replace-plant {
+  position: absolute;
+  max-width: calc(var(--max-plant-width) * 1px);
+  z-index: 20;
+}
+
+.replace-plant_from {
+  bottom: 100%;
+  animation: exit var(--replace-plant-duration) ease-in-out forwards 1000ms;
+}
+
+.replace-plant_to {
+  bottom: 500px;
+  animation: exit var(--replace-plant-duration) ease-in-out reverse forwards
+    calc(var(--replace-plant-duration) + 400ms + 1000ms);
+}

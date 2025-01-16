@@ -1,0 +1,14 @@
+@function plantWidth() {
+  @return calc(var(--max-plant-width) * 1px);
+}
+
+/**
+ * Функция proportionalToPlantWidth($value)
+ * масштабирует $value прямо пропорционально plant-width из рассчета, что оригинальное value задано
+ * для plant-width === 60px;
+ */
+@function proportionalToPlantWidth($value) {
+  $scaled-value: calc($value / 60 * plantWidth());
+
+  @return $scaled-value;
+}
