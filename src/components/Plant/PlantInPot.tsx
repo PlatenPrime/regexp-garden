@@ -74,7 +74,6 @@ export const PlantInPot: React.FC<PlantProps> = ({
         )}
       </div>
       {isPlayingAnimation && AnimationComponent && <AnimationComponent />}
-      {/*{AnimationComponent && <AnimationComponent />}*/}
     </div>
   );
 };
