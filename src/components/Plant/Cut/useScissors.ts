@@ -1,9 +1,5 @@
 import { useEffect } from "react";
-import { randomBetweenZeroAnd } from "@/utils/random.ts";
-import {
-  getCssVariable,
-  proportionalToPlantWidth,
-} from "@/utils/cssVariables.ts";
+import { proportionalToPlantWidth } from "@/utils/cssVariables.ts";
 
 /*
     Функция для генерации случайного пути path()
