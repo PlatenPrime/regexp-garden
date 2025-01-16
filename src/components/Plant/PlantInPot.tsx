@@ -67,12 +67,7 @@ export const PlantInPot: React.FC<PlantProps> = ({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        {/*{isPlayingAnimation && PlantComponent ? (*/}
-        {/*  <PlantComponent />*/}
-        {/*) : (*/}
-        {/*  <DefaultPlant plantName={plantName} />*/}
-        {/*)}*/}
-        {PlantComponent ? (
+        {isPlayingAnimation && PlantComponent ? (
           <PlantComponent />
         ) : (
           <DefaultPlant plantName={plantName} />
