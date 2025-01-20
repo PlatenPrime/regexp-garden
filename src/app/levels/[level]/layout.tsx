@@ -35,6 +35,8 @@ export const generateMetadata = async ({
       type: "article",
       title,
       images: ShareImg.src,
+      locale: "en_US",
+      url: "https://regexp-garden.madewith.fun",
     },
   };
 };
