@@ -3,15 +3,35 @@ import { useGame } from "@/utils/useGame/useGame";
 import EditorTabIcon from "@public/assets/icons/editor-tab.svg";
 import LevelLogIcon from "@public/assets/icons/lesson-log-tab.svg";
 import { Editor } from "@/components/Editor";
-import { useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { emitter, GameEvent } from "@/utils/emitter";
 import { useRiseFlagForSomeTimeOnEvent } from "@/utils/useRiseFlagForSomeTimeOnEvent.ts";
 import { logEvent } from "@/utils/logging.ts";
+import { AnswerInputSymbol } from "@/game/LevelClasses/types.ts";
+import { AnswerInput } from "@/components/InputTabs/AnswerInput.tsx";
 
 export const InputTabs = () => {
   const { currentLevel, currentLevelInd, renderLog } = useGame();
 
-  const code: React.ElementType[] = currentLevel.placeholder;
+  const code: (React.ElementType | typeof AnswerInputSymbol)[] =
+    currentLevel.placeholder;
+  const codeWithAnswerInputInd = code.indexOf(AnswerInputSymbol);
+
+  if (codeWithAnswerInputInd === -1) {
+    throw new Error("AnswerInputSymbol is not found in the level");
+  }
+
+  //конвенция такова, что AnswerInputSymbol окружен слева и справа своими пропсами
+  const codeMapped = [
+    ...code.slice(0, codeWithAnswerInputInd - 1),
+    () => (
+      <AnswerInput
+        BeforeInput={code[codeWithAnswerInputInd - 1] as FunctionComponent}
+        AfterInput={code[codeWithAnswerInputInd + 1] as FunctionComponent}
+      />
+    ),
+    ...code.slice(codeWithAnswerInputInd + 2),
+  ] as React.ElementType[];
 
   const shouldAnimate = useRiseFlagForSomeTimeOnEvent(
     GameEvent.SolutionCheckFailed,
@@ -75,7 +95,7 @@ export const InputTabs = () => {
           codeColor="#DF635B"
           activeLineInd={currentLevel.activeLineInd}
           heightInStrings={6}
-          code={code}
+          code={codeMapped}
         />
       </TabPanel>
       <TabPanel className="tabPanel">

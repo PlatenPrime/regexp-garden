@@ -1,5 +1,6 @@
 import React from "react";
-import { HighlightOnHoverPlants } from "@/utils/ui.tsx";
+
+import {HighlightOnHoverPlants} from "@/utils/hoverOnPlants.ts";
 
 export type PlantTextRepresentationProps = {
   plantLabel: string;

@@ -18,3 +18,5 @@ export type CheckSolutionResult = {
 };
 
 export type GardenTransition = { from: PlantName; to: PlantName };
+
+export const AnswerInputSymbol: unique symbol = Symbol("AnswerInput");

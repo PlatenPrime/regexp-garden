@@ -1,7 +1,8 @@
 import { ArrayFilterMatchLevel } from "@/game/LevelClasses/ArrayFilterMatchLevel.class.ts";
-import { AnswerInput } from "@/components/InputTabs/AnswerInput.tsx";
+import { AnswerInputSymbol } from "@/game/LevelClasses/types.ts";
 
 export class CutPlantsByArrayFilterMatchLevel extends ArrayFilterMatchLevel {
+  //@ts-expect-error unique symbol
   placeholder = [
     () => (
       <>
@@ -15,25 +16,22 @@ export class CutPlantsByArrayFilterMatchLevel extends ArrayFilterMatchLevel {
       </>
     ),
     () => (
-      <AnswerInput
-        BeforeInput={() => (
-          <>
-            <span className="keyword pl-4">if </span>
-            <span className="casual-token">(</span>
-            <span className="identifier">plant</span>
-            <span className="casual-token">.</span>
-            <span className="method">match</span>
-              <span className="casual-token">(</span>
-              <span className="regexp">/</span>
-          </>
-        )}
-        AfterInput={() => (
-          <>
-            <span className="regexp">/{this.regexpFlags}</span>
-            <span className="casual-token">) {`{`}</span>
-          </>
-        )}
-      />
+      <>
+        <span className="keyword pl-4">if </span>
+        <span className="casual-token">(</span>
+        <span className="identifier">plant</span>
+        <span className="casual-token">.</span>
+        <span className="method">match</span>
+        <span className="casual-token">(</span>
+        <span className="regexp">/</span>
+      </>
+    ),
+    AnswerInputSymbol,
+    () => (
+      <>
+        <span className="regexp">/{this.regexpFlags}</span>
+        <span className="casual-token">) {`{`}</span>
+      </>
     ),
     () => (
       <>

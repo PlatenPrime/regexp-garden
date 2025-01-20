@@ -78,10 +78,6 @@ export default observer(function LevelPage() {
 
   return (
     <>
-      <head>
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={currentLevel.titleToken} />
-      </head>
       <div className="h-auto py-10 px-5">
         <Overlay shouldShow={isOnLockedLevel} />
         <div className="flex h-full w-full flex-col justify-start items-center gap-10 position-relative">

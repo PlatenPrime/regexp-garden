@@ -176,7 +176,7 @@ export const useGame = (): CurrentLevel => {
 
   return {
     currentLevelInd,
-    currentLevel,
+    currentLevel: currentLevel as BaseLevel,
     isOnLockedLevel,
     isOnEdgeLevel: isOnNextLevel,
     isOnLastLevel,

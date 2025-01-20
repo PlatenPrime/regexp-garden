@@ -5,6 +5,7 @@ import {
 } from "@/game/LevelClasses/BaseLevel.class";
 import { FunctionComponent } from "react";
 import { isNot } from "@/utils/arrays.ts";
+import { AnswerInputSymbol } from "@/game/LevelClasses/types.ts";
 
 export type ArrayFilterMatchLevelParams = BaseLevelParams & {
   garden: PlantName[];
@@ -26,7 +27,7 @@ export abstract class ArrayFilterMatchLevel extends BaseLevel {
       .filter(isNot(null));
   }
 
-  abstract placeholder: FunctionComponent[];
+  abstract placeholder: (FunctionComponent | typeof AnswerInputSymbol)[];
 
   activeLineInd = 1;
 

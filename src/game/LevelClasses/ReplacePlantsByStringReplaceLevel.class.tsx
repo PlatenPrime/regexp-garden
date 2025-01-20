@@ -3,7 +3,7 @@ import {
   BaseReplacePlantLevelParams,
 } from "@/game/LevelClasses/BaseReplacePlantLevel";
 import { FunctionComponent } from "react";
-import { AnswerInput } from "@/components/InputTabs/AnswerInput.tsx";
+import { AnswerInputSymbol } from "@/game/LevelClasses/types.ts";
 
 export class ReplacePlantsByStringReplaceLevel extends BaseReplacePlantLevel {
   regexpFlags = "gi";
@@ -15,7 +15,7 @@ export class ReplacePlantsByStringReplaceLevel extends BaseReplacePlantLevel {
       .split("\t");
   }
 
-  get placeholder(): FunctionComponent[] {
+  get placeholder(): (FunctionComponent | typeof AnswerInputSymbol)[] {
     return [
       () => (
         <>
@@ -25,24 +25,21 @@ export class ReplacePlantsByStringReplaceLevel extends BaseReplacePlantLevel {
         </>
       ),
       () => (
-        <AnswerInput
-          BeforeInput={() => (
-            <>
-              <span className="casual-token pl-4">.</span>
-              <span className="method">replace</span>
-              <span className="casual-token">(</span>
-              <span className="regexp">/</span>
-            </>
-          )}
-          AfterInput={() => (
-            <>
-              <span className="regexp">/{this.regexpFlags}</span>
-              <span className="casual-token">, </span>
-              <span className="literal">{this.displayReplacer}</span>
-              <span className="casual-token">);</span>
-            </>
-          )}
-        />
+        <>
+          <span className="casual-token pl-4">.</span>
+          <span className="method">replace</span>
+          <span className="casual-token">(</span>
+          <span className="regexp">/</span>
+        </>
+      ),
+      AnswerInputSymbol,
+      () => (
+        <>
+          <span className="regexp">/{this.regexpFlags}</span>
+          <span className="casual-token">, </span>
+          <span className="literal">{this.displayReplacer}</span>
+          <span className="casual-token">);</span>
+        </>
       ),
     ];
   }

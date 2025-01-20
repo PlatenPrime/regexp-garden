@@ -6,7 +6,7 @@ import { useRiseFlagForSomeTimeOnEvent } from "@/utils/useRiseFlagForSomeTimeOnE
 import { emitter, GameEvent } from "@/utils/emitter.ts";
 import { DefaultPlant } from "@/components/Plant/DefaultPlant";
 import { AnimationParams } from "@/utils/useGame/useGame";
-import { HighlightOnHoverPlants } from "@/utils/ui.tsx";
+import { HighlightOnHoverPlants } from "@/utils/hoverOnPlants.ts";
 
 type PlantProps = {
   plantName: PlantName;

@@ -6,7 +6,7 @@ import {
 } from "@/utils/arrays.ts";
 import { PREFERABLE_MAX_STRING_LENGTH, wrapInQoutes } from "@/utils/misc.ts";
 import { observer } from "mobx-react-lite";
-import { useHighlightOnHoverPlants } from "@/utils/ui.tsx";
+import { useHighlightOnHoverPlants } from "@/utils/hoverOnPlants.ts";
 
 export type RenderPlantLabelsMode = "list" | "string";
 export type Suffix = "tabulation" | "comma";

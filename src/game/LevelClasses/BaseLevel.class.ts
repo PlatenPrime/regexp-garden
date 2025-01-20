@@ -6,6 +6,7 @@ import {
   ValidationResult,
 } from "@/game/LevelClasses/validators.tsx";
 import {
+  AnswerInputSymbol,
   CheckSolutionResult,
   RenderableLevel,
   Validator,
@@ -76,8 +77,10 @@ export abstract class BaseLevel implements RenderableLevel {
   }
   //should be shown if at least one of checks is not passed
   hint: FunctionComponent[] = [];
-  //placeholder with $INPUT token for a solution input
-  abstract placeholder: FunctionComponent[];
+  //placeholder with AnswerInputSymbol token for a solution input
+  //the FC right before AnswerInputSymbol is used as AnswerInput before prop
+  //the FC right after AnswerInputSymbol is used as AnswerInput after prop
+  abstract placeholder: (FunctionComponent | typeof AnswerInputSymbol)[];
 
   abstract activeLineInd: number;
 

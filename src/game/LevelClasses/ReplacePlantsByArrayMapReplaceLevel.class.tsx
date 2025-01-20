@@ -3,7 +3,7 @@ import {
   BaseReplacePlantLevelParams,
 } from "@/game/LevelClasses/BaseReplacePlantLevel";
 import { FunctionComponent } from "react";
-import { AnswerInput } from "@/components/InputTabs/AnswerInput.tsx";
+import { AnswerInputSymbol } from "@/game/LevelClasses/types.ts";
 
 export class ReplacePlantsByArrayMapReplaceLevel extends BaseReplacePlantLevel {
   regexpFlags = "i";
@@ -14,7 +14,7 @@ export class ReplacePlantsByArrayMapReplaceLevel extends BaseReplacePlantLevel {
     );
   }
 
-  get placeholder(): FunctionComponent[] {
+  get placeholder(): (FunctionComponent | typeof AnswerInputSymbol)[] {
     return [
       () => (
         <>
@@ -33,25 +33,22 @@ export class ReplacePlantsByArrayMapReplaceLevel extends BaseReplacePlantLevel {
         </>
       ),
       () => (
-        <AnswerInput
-          BeforeInput={() => (
-            <>
-              <span className="identifier pl-8">plant</span>
-              <span className="casual-token">.</span>
-              <span className="method">replace</span>
-              <span className="casual-token">(</span>
-              <span className="regexp">/</span>
-            </>
-          )}
-          AfterInput={() => (
-            <>
-              <span className="regexp">/{this.regexpFlags}</span>
-              <span className="casual-token">, </span>
-              <span className="literal">{this.displayReplacer}</span>
-              <span className="casual-token">)</span>
-            </>
-          )}
-        />
+        <>
+          <span className="identifier pl-8">plant</span>
+          <span className="casual-token">.</span>
+          <span className="method">replace</span>
+          <span className="casual-token">(</span>
+          <span className="regexp">/</span>
+        </>
+      ),
+      AnswerInputSymbol,
+      () => (
+        <>
+          <span className="regexp">/{this.regexpFlags}</span>
+          <span className="casual-token">, </span>
+          <span className="literal">{this.displayReplacer}</span>
+          <span className="casual-token">)</span>
+        </>
       ),
       () => (
         <>

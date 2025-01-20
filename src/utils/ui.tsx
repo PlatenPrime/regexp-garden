@@ -1,6 +1,4 @@
-import { FunctionComponent, useMemo } from "react";
-import { useGame } from "@/utils/useGame/useGame.tsx";
-import { gardenState } from "@/utils/useGame/gardenState.ts";
+import { FunctionComponent } from "react";
 
 const regexpFromString = (regexpString: string): RegExp | null => {
   const body = regexpString.match(/[/](.*)[/]/)?.[1] ?? null;
@@ -60,27 +58,5 @@ export const consoleLogReplace = (
       <span className="casual-token">) </span>
       <span className="comment">{`// ${result} `}</span>
     </>
-  );
-};
-
-export type HighlightOnHoverPlants = {
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-};
-
-export type HoverHandlers = HighlightOnHoverPlants;
-
-export const useHighlightOnHoverPlants = (
-  inds: number[],
-): HighlightOnHoverPlants => {
-  const { currentLevelInd } = useGame();
-  return useMemo(
-    () => ({
-      onMouseEnter: () => {
-        gardenState.highlightedPlantInds = inds.slice();
-      },
-      onMouseLeave: () => (gardenState.highlightedPlantInds = []),
-    }),
-    [currentLevelInd],
   );
 };

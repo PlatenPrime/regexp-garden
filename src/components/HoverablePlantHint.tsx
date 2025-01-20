@@ -1,5 +1,5 @@
 import React from "react";
-import { useHighlightOnHoverPlants } from "@/utils/ui.tsx";
+import { useHighlightOnHoverPlants } from "@/utils/hoverOnPlants.ts";
 
 export type HoverablePlantHintProps = {
   children: React.ReactNode;

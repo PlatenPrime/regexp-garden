@@ -1,37 +1,58 @@
-"use client";
 import { Header } from "@/components/Header/Header/Header";
 import { Sidebar } from "@/components/Sidebar/Sidebar";
-import { usePreserveScrollPosition } from "@/utils/usePreserveScrollPosition.ts";
-import { emitter, GameEvent } from "@/utils/emitter.ts";
-import { useEffect } from "react";
 import GATracker from "@/components/GATracker.tsx";
+import { Metadata } from "next";
+import ClientScrollContainer from "@/components/ClientScrollContainer.tsx";
+import { LevelsByOrder } from "@/game/Levels";
+import React from "react";
+import { convert } from "html-to-text";
+import ShareImg from "@public/share.jpg";
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { level: string };
+}): Promise<Metadata> => {
+  //https://github.com/vercel/next.js/discussions/69244
+  const { renderToString } = await import("react-dom/server");
+  const currentLevel = LevelsByOrder[Number(params.level) - 1];
+  const content = convert(renderToString(<currentLevel.description />), {
+    wordwrap: null,
+    selectors: [
+      {
+        //чтобы не выводить нумерацию строк кода в редакторе
+        selector: "div > div > span",
+        format: "skip",
+      },
+    ],
+  });
+  const title = `RegexpGarden - Level ${params.level}: ${currentLevel.titleToken || currentLevel.title}`;
+  return {
+    title,
+    description: content,
+    openGraph: {
+      type: "article",
+      title,
+      images: ShareImg.src,
+    },
+  };
+};
 
 export default function LevelLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const scrollContainerRef = usePreserveScrollPosition(LevelLayout);
-
-  useEffect(() => {
-    return emitter.on(GameEvent.SolutionCheckSucceeded, () => {
-      scrollContainerRef.current?.scrollTo({ top: 0 });
-    });
-  }, []);
-
   return (
     <>
       <GATracker />
       <div className="flex h-full w-full flex-auto justify-between">
-        <div
-          ref={scrollContainerRef}
-          className="flex h-full w-full flex-auto flex-col justify-between overflow-y-auto overflow-x-hidden"
-        >
+        <ClientScrollContainer>
           <div className="relative p-5">
             <Header />
             {children}
           </div>
-        </div>
+        </ClientScrollContainer>
         <Sidebar />
       </div>
     </>

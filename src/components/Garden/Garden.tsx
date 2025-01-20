@@ -4,7 +4,8 @@ import { PlantInPot } from "@/components/Plant/PlantInPot";
 import { gardenState } from "@/utils/useGame/gardenState.ts";
 import { observer } from "mobx-react-lite";
 import { useMemo } from "react";
-import { useHighlightOnHoverPlants } from "@/utils/ui.tsx";
+
+import {useHighlightOnHoverPlants} from "@/utils/hoverOnPlants.ts";
 
 export const Garden = observer(() => {
   const { currentLevelInd, useAnimation } = useGame();

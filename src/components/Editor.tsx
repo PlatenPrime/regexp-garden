@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-import { useGame } from "@/utils/useGame/useGame";
+import React from "react";
 
 export type EditorProps = {
   fontSize?: string;
@@ -30,7 +29,6 @@ export const Editor: React.FC<EditorProps> = ({
   fontSize,
   lineHeight,
 }) => {
-  const { currentLevelInd } = useGame();
   const defaultLineHeight = "1.3125rem";
   const lineHeightUse = lineHeight ?? defaultLineHeight;
 
@@ -78,22 +76,18 @@ export const Editor: React.FC<EditorProps> = ({
           color: codeColor ?? "#8C97B0",
         }}
       >
-        {useMemo(
-          () =>
-            code.map((StringEl, ind) => (
-              <pre key={ind}>
-                <code
-                  className="flex items-center"
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                  <StringEl />
-                </code>
-              </pre>
-            )),
-          [currentLevelInd],
-        )}
+        {code.map((StringEl, ind) => (
+          <pre key={ind}>
+            <code
+              className="flex items-center"
+              style={{
+                width: "100%",
+              }}
+            >
+              <StringEl />
+            </code>
+          </pre>
+        ))}
       </div>
     </div>
   );
