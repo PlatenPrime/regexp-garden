@@ -30,6 +30,7 @@ export const generateMetadata = async ({
   return {
     title,
     description: content,
+    metadataBase: new URL("https://regexp-garden.madewith.fun"),
     openGraph: {
       type: "article",
       title,
