@@ -8,6 +8,14 @@ import { usePreserveScrollPosition } from "@/utils/usePreserveScrollPosition";
 
 export const Sidebar = observer(function _Sidebar() {
   const scrollContainerRef = usePreserveScrollPosition(_Sidebar);
+  console.log(
+    "=>(Sidebar.tsx:25) sidebarModeToggle.currentState",
+    sidebarModeToggle.currentState,
+  );
+  console.log(
+    "=>(Sidebar.tsx:29) sidebarModeToggle.currentState === SidebarMode.ShowAllLevels",
+    sidebarModeToggle.currentState === SidebarMode.ShowAllLevels,
+  );
 
   return (
     <div
