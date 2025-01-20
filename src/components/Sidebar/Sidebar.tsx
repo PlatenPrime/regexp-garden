@@ -5,17 +5,13 @@ import { SidebarMode } from "@/utils/consts";
 import { SidebarShowAllLevelsSidebar } from "@/components/Sidebar/SidebarShowAllLevelsSidebar/SidebarShowAllLevelsSidebar";
 import { SidebarShowCurrentLevelSidebar } from "@/components/Sidebar/SidebarShowCurrentLevelSidebar/SidebarShowCurrentLevelSidebar";
 import { usePreserveScrollPosition } from "@/utils/usePreserveScrollPosition";
+import { useEffect } from "react";
 
 export const Sidebar = observer(function _Sidebar() {
   const scrollContainerRef = usePreserveScrollPosition(_Sidebar);
-  console.log(
-    "=>(Sidebar.tsx:25) sidebarModeToggle.currentState",
-    sidebarModeToggle.currentState,
-  );
-  console.log(
-    "=>(Sidebar.tsx:29) sidebarModeToggle.currentState === SidebarMode.ShowAllLevels",
-    sidebarModeToggle.currentState === SidebarMode.ShowAllLevels,
-  );
+  useEffect(() => {
+    sidebarModeToggle.setState(SidebarMode.ShowCurrentLevel);
+  }, []);
 
   return (
     <div
