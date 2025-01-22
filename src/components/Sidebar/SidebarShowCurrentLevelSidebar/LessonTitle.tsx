@@ -1,12 +1,13 @@
 import { useGame } from "@/utils/useGame/useGame";
 import { FunctionComponent } from "react";
+import { stringOrFCToFC } from "@/utils/stringOrFCToFC.tsx";
 
 export const LessonTitle = () => {
   const { currentLevel } = useGame();
-  const TitleDescription: FunctionComponent =
-    typeof currentLevel.titleDescription === "string"
-      ? () => <>{currentLevel.titleDescription as string}</>
-      : currentLevel.titleDescription;
+  const TitleDescription: FunctionComponent = stringOrFCToFC(
+    currentLevel.titleDescription,
+  );
+
   return (
     <>
       <div className="flex flex-col gap-3 items-start">

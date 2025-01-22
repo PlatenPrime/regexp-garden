@@ -26,6 +26,7 @@ import { wait } from "@/utils/misc.ts";
 import { inter } from "@/styles/fonts.ts";
 import { ValidationError } from "@/game/LevelClasses/validators.tsx";
 import { solutionRef } from "@/utils/useGame/solutionRef.ts";
+import { stringOrFCToFC } from "@/utils/stringOrFCToFC.tsx";
 
 export type AnswerInputProps = {
   BeforeInput: FunctionComponent;
@@ -41,8 +42,7 @@ export const AnswerInput = observer(function PlaceholderStringEl({
   const btnRef = useRef<HTMLButtonElement>(null);
   const [shouldShowTooltip, setShouldShowTooltip] = useState(false);
   const [tooltipMsg, setTooltipMsg] = useState<ValidationError>("");
-  const TooltipMsg =
-    typeof tooltipMsg === "string" ? () => <>{tooltipMsg}</> : tooltipMsg;
+  const TooltipMsg = stringOrFCToFC(tooltipMsg);
   const arrowRef = useRef(null);
   const { refs, floatingStyles, context } = useFloating({
     placement: "top",

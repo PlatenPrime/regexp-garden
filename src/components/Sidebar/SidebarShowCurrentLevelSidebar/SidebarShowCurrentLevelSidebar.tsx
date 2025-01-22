@@ -4,14 +4,12 @@ import { LessonTitle } from "@/components/Sidebar/SidebarShowCurrentLevelSidebar
 import { HintBtn } from "@/components/Sidebar/SidebarShowCurrentLevelSidebar/HintBtn";
 import { useGame } from "@/utils/useGame/useGame";
 import { UnsupportedBrowserDescription } from "@/components/UnsupportedBrowser/UnsupportedBrowserDescription.tsx";
+import { stringOrFCToFC } from "@/utils/stringOrFCToFC.tsx";
 
 export const SidebarShowCurrentLevelSidebar = () => {
   const { currentLevel } = useGame();
 
-  const Description =
-    typeof currentLevel.description === "string"
-      ? () => <>{currentLevel.description as string}</>
-      : currentLevel.description;
+  const Description = stringOrFCToFC(currentLevel.description);
 
   return (
     <>
