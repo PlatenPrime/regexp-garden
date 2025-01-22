@@ -2,7 +2,6 @@ import { PlantName } from "@/game/plants";
 import { createMatchesValidation } from "@/game/LevelClasses/validators.tsx";
 import { ReplacePlantsByStringReplaceLevel } from "@/game/LevelClasses/ReplacePlantsByStringReplaceLevel.class";
 import { HoverablePlantHint } from "@/components/HoverablePlantHint.tsx";
-import Link from "next/link";
 import { getLevelURLNumberByLevel } from "@/utils/routing.ts";
 import { PositiveLookahead } from "@/game/Levels/PositiveLookahead.tsx";
 import { consoleLogMatch, consoleLogReplace } from "@/utils/ui.tsx";
@@ -33,12 +32,12 @@ export const NegativeLookahead = new ReplacePlantsByStringReplaceLevel({
     <>
       <p>
         Much alike{" "}
-        <Link
+        <a
           href={`/levels/${getLevelURLNumberByLevel(PositiveLookahead)}`}
           className="text-ds-blueMain underline"
         >
           Positive Lookahead
-        </Link>
+        </a>
         , but do the opposite:
       </p>
       <Editor

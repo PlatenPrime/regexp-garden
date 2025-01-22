@@ -4,7 +4,6 @@ import { ReplacePlantsByStringReplaceLevel } from "@/game/LevelClasses/ReplacePl
 import { HoverablePlantHint } from "@/components/HoverablePlantHint.tsx";
 import { Editor } from "@/components/Editor.tsx";
 import { consoleLogReplace } from "@/utils/ui.tsx";
-import Link from "next/link";
 import { getLevelURLNumberByLevel } from "@/utils/routing.ts";
 import { PositiveLookahead2 } from "@/game/Levels/PositiveLookahead2.tsx";
 
@@ -33,12 +32,12 @@ export const NegativeLookahead2 = new ReplacePlantsByStringReplaceLevel({
     <>
       <p>
         Negative lookaheads, like{" "}
-        <Link
+        <a
           href={`/levels/${getLevelURLNumberByLevel(PositiveLookahead2)}`}
           className="text-ds-blueMain underline"
         >
           Positive Lookaheads
-        </Link>
+        </a>
         , can include nested capturing and non-capturing groups:
       </p>
       <Editor

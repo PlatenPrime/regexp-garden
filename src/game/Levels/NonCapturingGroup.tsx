@@ -2,7 +2,6 @@ import { createMatchesValidation } from "@/game/LevelClasses/validators.tsx";
 import { PlantName } from "@/game/plants";
 import { FertilizePlantsByArrayFilterMatchLevel } from "@/game/LevelClasses/FertilizePlantsByArrayFilterMatchLevel.class.tsx";
 import { HoverablePlantHint } from "@/components/HoverablePlantHint.tsx";
-import Link from "next/link";
 import { getLevelURLNumberByLevel } from "@/utils/routing.ts";
 import { CapturingGroup } from "@/game/Levels/CapturingGroup.tsx";
 import { consoleLogMatch, consoleLogReplace } from "@/utils/ui.tsx";
@@ -28,12 +27,12 @@ export const NonCapturingGroup = new FertilizePlantsByArrayFilterMatchLevel({
     <>
       <p>
         In{" "}
-        <Link
+        <a
           href={`/levels/${getLevelURLNumberByLevel(CapturingGroup)}`}
           className="text-ds-blueMain underline"
         >
           Capturing groups
-        </Link>{" "}
+        </a>{" "}
         we&apos;ve seen that the brackets can be used to reuse repetitive
         patterns inside regular expressions. But capturing groups are not the
         best option for it - the main purpose of capturing groups is
