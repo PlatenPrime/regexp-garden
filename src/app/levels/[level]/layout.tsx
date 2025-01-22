@@ -4,7 +4,7 @@ import GATracker from "@/components/GATracker.tsx";
 import { Metadata } from "next";
 import ClientScrollContainer from "@/components/ClientScrollContainer.tsx";
 import { LevelsByOrder } from "@/game/Levels";
-import React, { ReactNode } from "react";
+import React from "react";
 import { convert } from "html-to-text";
 import ShareImg from "@public/share.jpg";
 import { stringOrFCToFC } from "@/utils/stringOrFCToFC.tsx";
