@@ -21,7 +21,6 @@ import {
   useRole,
 } from "@floating-ui/react";
 import { emitter, GameEvent } from "@/utils/emitter.ts";
-import { useEvent } from "react-use";
 import { showHintToggle } from "@/utils/toggle/showHintToggle.ts";
 import { wait } from "@/utils/misc.ts";
 import { inter } from "@/styles/fonts.ts";
@@ -70,38 +69,6 @@ export const AnswerInput = observer(function PlaceholderStringEl({
 
   const { getReferenceProps, getFloatingProps } = useInteractions([role]);
 
-  useEffect(() => {
-    const unsub = emitter.on(
-      GameEvent.SolutionValidationFailed,
-      (solution, validationError) => {
-        setShouldShowTooltip(true);
-        setTooltipMsg(() => validationError);
-      },
-    );
-
-    return unsub;
-  }, []);
-
-  useEffect(() => {
-    const unsub = emitter.on(GameEvent.SolutionSubmitted, () => {
-      setShouldShowTooltip(false);
-      setTooltipMsg("");
-    });
-
-    return unsub;
-  }, []);
-
-  const hideTooltip = useCallback(() => {
-    //прячем тултип при фокусе на поле
-    setShouldShowTooltip(false);
-    setTooltipMsg("");
-  }, []);
-
-  //прячем тултип при переходе на следующий уровень
-  useEffect(() => {
-    hideTooltip();
-  }, [currentLevelInd]);
-
   const onEnterPressed = useCallback(
     async ({ key }: KeyboardEvent) => {
       if (isOnLockedLevel || showHintToggle.currentState) {
@@ -125,11 +92,41 @@ export const AnswerInput = observer(function PlaceholderStringEl({
     [isOnLockedLevel],
   );
 
-  useEvent(
-    "keydown",
-    onEnterPressed as unknown as EventListenerOrEventListenerObject,
-    document,
-  );
+  useEffect(() => {
+    const unsubValidationFail = emitter.on(
+      GameEvent.SolutionValidationFailed,
+      (solution, validationError) => {
+        setShouldShowTooltip(true);
+        setTooltipMsg(() => validationError);
+      },
+    );
+
+    const unsubSubmitSolution = emitter.on(GameEvent.SolutionSubmitted, () => {
+      setShouldShowTooltip(false);
+      setTooltipMsg("");
+    });
+
+    if (document) {
+      document.addEventListener("keydown", onEnterPressed);
+    }
+
+    return () => {
+      unsubValidationFail();
+      unsubSubmitSolution();
+      document.removeEventListener("keydown", onEnterPressed);
+    };
+  }, []);
+
+  const hideTooltip = useCallback(() => {
+    //прячем тултип при фокусе на поле
+    setShouldShowTooltip(false);
+    setTooltipMsg("");
+  }, []);
+
+  //прячем тултип при переходе на следующий уровень
+  useEffect(() => {
+    hideTooltip();
+  }, [currentLevelInd]);
 
   const onBtnClick = useCallback(async (): Promise<void> => {
     if (currentLevel.isNotSupported) {
