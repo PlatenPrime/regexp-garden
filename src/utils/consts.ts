@@ -1,3 +1,4 @@
+export const BASE_URL = "http://regexp-garden.madewith.fun";
 export enum SidebarMode {
   ShowCurrentLevel = "ShowCurrentLevel",
   ShowAllLevels = "ShowAllLevels",
