@@ -8,5 +8,19 @@ const nextConfig = {
 
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/levels/1",
+        permanent: true,
+      },
+      {
+        source: "/levels",
+        destination: "/levels/1",
+        permanent: true,
+      },
+    ];
+  },
 };
 export default nextConfig;
