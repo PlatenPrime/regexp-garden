@@ -143,24 +143,25 @@ body {
 /* width */
 ::-webkit-scrollbar {
   width: 4px;
-  height: 4px;
+  height: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #24272e;
+  background: #3d4146;
   border-radius: 5px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #717888;
+  background: #0e60ac;
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #8c97b0;
+  background: #4a97df;
+  cursor: pointer;
 }
 
 @keyframes fail-animation {
